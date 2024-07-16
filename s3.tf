@@ -1,6 +1,6 @@
 module "bucket_a" {
   source  = "Invicton-Labs/secure-s3-bucket/aws"
-  version = "~>0.3.0"
+  version = "~>0.3.1"
   providers = {
     aws = aws.a
   }
@@ -11,6 +11,8 @@ module "bucket_a" {
   versioned                     = true
   name                          = var.name_a
   mfa_delete_enabled            = var.mfa_delete_enabled_a
+  mfa_delete_serial_number      = var.mfa_delete_serial_number_a
+  mfa_delete_token_code         = var.mfa_delete_token_code_a
   bucket_policy_json_documents  = concat(var.bucket_policy_json_documents_a, var.bucket_policy_json_documents_both)
   kms_key_arn                   = var.kms_key_arn_a
   create_new_kms_key            = var.create_new_kms_key_a
@@ -26,6 +28,8 @@ module "bucket_a" {
   object_lock_enabled           = var.object_lock_enabled_a
   force_destroy                 = var.force_destroy_a
   force_allow_cloudtrail_digest = var.force_allow_cloudtrail_digest_a
+  cors_rules                    = var.cors_rules_a
+  tags_s3_bucket                = var.tags_s3_bucket_a
 }
 
 locals {
@@ -48,7 +52,7 @@ locals {
 
 module "bucket_b" {
   source  = "Invicton-Labs/secure-s3-bucket/aws"
-  version = "~>0.3.0"
+  version = "~>0.3.1"
   providers = {
     aws = aws.b
   }
@@ -59,6 +63,8 @@ module "bucket_b" {
   versioned                     = true
   name                          = var.name_b
   mfa_delete_enabled            = local.var_mfa_delete_enabled_b
+  mfa_delete_serial_number      = local.var_mfa_delete_serial_number_b
+  mfa_delete_token_code         = local.var_mfa_delete_token_code_b
   bucket_policy_json_documents  = concat(var.bucket_policy_json_documents_b, var.bucket_policy_json_documents_both)
   kms_key_arn                   = local.b_kms_key_arn
   create_new_kms_key            = var.create_new_kms_key_b
@@ -74,19 +80,23 @@ module "bucket_b" {
   object_lock_enabled           = local.var_object_lock_enabled_b
   force_destroy                 = local.var_force_destroy_b
   force_allow_cloudtrail_digest = local.var_force_allow_cloudtrail_digest_b
+  cors_rules                    = local.var_cors_rules_b
+  tags_s3_bucket                = var.tags_s3_bucket_b
 }
 
 module "replication" {
   source  = "Invicton-Labs/secure-s3-bucket-replication/aws"
-  version = "~>0.2.0"
+  version = "~>0.2.1"
   providers = {
     aws.a = aws.a
     aws.b = aws.b
   }
-  bucket_a_module  = module.bucket_a
-  bucket_b_module  = module.bucket_b
-  replicate_a_to_b = var.replicate_a_to_b
-  replicate_b_to_a = var.replicate_b_to_a
-  a_to_b_rules     = var.a_to_b_rules
-  b_to_a_rules     = var.b_to_a_rules
+  bucket_a_module      = module.bucket_a
+  bucket_b_module      = module.bucket_b
+  replicate_a_to_b     = var.replicate_a_to_b
+  replicate_b_to_a     = var.replicate_b_to_a
+  a_to_b_rules         = var.a_to_b_rules
+  b_to_a_rules         = var.b_to_a_rules
+  tags_iam_role_a_to_b = var.tags_iam_role_a_to_b
+  tags_iam_role_b_to_a = var.tags_iam_role_b_to_a
 }

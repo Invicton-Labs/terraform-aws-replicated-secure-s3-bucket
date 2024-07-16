@@ -13,9 +13,25 @@ output "mfa_delete_enabled_a" {
   description = "The value of the `mfa_delete_enabled_a` input variable, or the default value if the input was `null`."
   value       = var.mfa_delete_enabled_a
 }
+output "mfa_delete_serial_number_a" {
+  description = "The value of the `mfa_delete_serial_number_a` input variable, or the default value if the input was `null`."
+  value       = var.mfa_delete_serial_number_a
+}
+output "mfa_delete_token_code_a" {
+  description = "The value of the `mfa_delete_token_code_a` input variable, or the default value if the input was `null`."
+  value       = var.mfa_delete_token_code_a
+}
 output "mfa_delete_enabled_b" {
   description = "The value of the `mfa_delete_enabled_b` input variable, or the default value if the input was `null`."
   value       = local.var_mfa_delete_enabled_b
+}
+output "mfa_delete_serial_number_b" {
+  description = "The value of the `mfa_delete_serial_number_b` input variable, or the default value if the input was `null`."
+  value       = local.var_mfa_delete_serial_number_b
+}
+output "mfa_delete_token_code_b" {
+  description = "The value of the `mfa_delete_token_code_b` input variable, or the default value if the input was `null`."
+  value       = local.var_mfa_delete_token_code_b
 }
 output "bucket_policy_json_documents_a" {
   description = "The value of the `bucket_policy_json_documents_a` input variable, or the default value if the input was `null`."
@@ -160,6 +176,30 @@ output "a_to_b_rules" {
 output "b_to_a_rules" {
   description = "The value of the `b_to_a_rules` input variable, or the default value if the input was `null`."
   value       = var.b_to_a_rules
+}
+output "cors_rules_a" {
+  description = "The value of the `cors_rules_a` input variable, or the default value if the input was `null`."
+  value       = var.cors_rules_a
+}
+output "cors_rules_b" {
+  description = "The value of the `cors_rules_b` input variable, or the default value if the input was `null`."
+  value       = local.var_cors_rules_b
+}
+output "tags_s3_bucket_a" {
+  description = "The value of the `tags_s3_bucket_a` input variable."
+  value       = var.tags_s3_bucket_a
+}
+output "tags_s3_bucket_b" {
+  description = "The value of the `tags_s3_bucket_b` input variable."
+  value       = var.tags_s3_bucket_b
+}
+output "tags_iam_role_a_to_b" {
+  description = "The value of the `tags_iam_role_a_to_b` input variable."
+  value       = var.tags_iam_role_a_to_b
+}
+output "tags_iam_role_b_to_a" {
+  description = "The value of the `tags_iam_role_b_to_a` input variable."
+  value       = var.tags_iam_role_b_to_a
 }
 
 //==================================================

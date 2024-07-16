@@ -16,13 +16,40 @@ variable "mfa_delete_enabled_a" {
   default     = false
   nullable    = false
 }
+variable "mfa_delete_serial_number_a" {
+  description = "The serial number of the MFA device to use for MFA delete for bucket A."
+  type        = string
+  default     = null
+  nullable    = true
+}
+variable "mfa_delete_token_code_a" {
+  description = "The token code currently showing on the MFA device to use for MFA delete for bucket A."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
 variable "mfa_delete_enabled_b" {
   description = "Whether MFA Delete should be enabled for the bucket B. If not provided, will default to the value of `mfa_delete_enabled_a`."
   type        = bool
   default     = null
 }
+variable "mfa_delete_serial_number_b" {
+  description = "The serial number of the MFA device to use for MFA delete for bucket B. If not provided, will default to the value of `mfa_delete_serial_number_a`."
+  type        = string
+  default     = null
+  nullable    = true
+}
+variable "mfa_delete_token_code_b" {
+  description = "The token code currently showing on the MFA device to use for MFA delete for bucket B. If not provided, will default to the value of `mfa_delete_token_code_a`."
+  type        = string
+  default     = null
+  nullable    = true
+}
 locals {
-  var_mfa_delete_enabled_b = var.mfa_delete_enabled_b != null ? var.mfa_delete_enabled_b : var.mfa_delete_enabled_a
+  var_mfa_delete_enabled_b       = var.mfa_delete_enabled_b != null ? var.mfa_delete_enabled_b : var.mfa_delete_enabled_a
+  var_mfa_delete_serial_number_b = var.mfa_delete_serial_number_b != null ? var.mfa_delete_serial_number_b : var.mfa_delete_serial_number_a
+  var_mfa_delete_token_code_b    = var.mfa_delete_token_code_b != null ? var.mfa_delete_token_code_b : var.mfa_delete_token_code_a
 }
 
 variable "bucket_policy_json_documents_a" {
@@ -300,4 +327,63 @@ variable "b_to_a_rules" {
   }))
   default  = []
   nullable = false
+}
+
+variable "cors_rules_a" {
+  description = "A list of CORS rules to apply to bucket A."
+  type = list(object({
+    allowed_headers = optional(list(string))
+    allowed_methods = list(string)
+    allowed_origins = list(string)
+    expose_headers  = optional(list(string))
+    id              = optional(string)
+    max_age_seconds = optional(number)
+  }))
+  nullable = false
+  default  = []
+}
+
+variable "cors_rules_b" {
+  description = "A list of CORS rules to apply to bucket B. If not provided, will default to the value of `cors_rules_a`."
+  type = list(object({
+    allowed_headers = optional(list(string))
+    allowed_methods = list(string)
+    allowed_origins = list(string)
+    expose_headers  = optional(list(string))
+    id              = optional(string)
+    max_age_seconds = optional(number)
+  }))
+  nullable = false
+  default  = []
+}
+locals {
+  var_cors_rules_b = var.cors_rules_b != null ? var.cors_rules_b : var.cors_rules_a
+}
+
+variable "tags_s3_bucket_a" {
+  description = "A map of tags to apply to S3 bucket A."
+  type        = map(string)
+  nullable    = true
+  default     = null
+}
+
+variable "tags_s3_bucket_b" {
+  description = "A map of tags to apply to S3 bucket B."
+  type        = map(string)
+  nullable    = true
+  default     = null
+}
+
+variable "tags_iam_role_a_to_b" {
+  description = "A map of tags to apply to the IAM role used for A-to-B replication."
+  type        = map(string)
+  nullable    = true
+  default     = null
+}
+
+variable "tags_iam_role_b_to_a" {
+  description = "A map of tags to apply to the IAM role used for A-to-B replication."
+  type        = map(string)
+  nullable    = true
+  default     = null
 }
