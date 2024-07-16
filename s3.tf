@@ -91,6 +91,10 @@ module "replication" {
     aws.a = aws.a
     aws.b = aws.b
   }
+  depends_on = [
+    module.bucket_a.complete,
+    module.bucket_b.complete,
+  ]
   bucket_a_module      = module.bucket_a
   bucket_b_module      = module.bucket_b
   replicate_a_to_b     = var.replicate_a_to_b

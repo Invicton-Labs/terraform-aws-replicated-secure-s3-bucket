@@ -217,3 +217,10 @@ output "replication" {
   description = "The Invicton-Labs/secure-s3-bucket-replication/aws module that was created for the bucket replication."
   value       = module.replication
 }
+output "complete" {
+  depends_on = [
+    module.replication.complete
+  ]
+  description = "Always `true`, but doesn't return until everything in this module has been applied."
+  value       = true
+}
