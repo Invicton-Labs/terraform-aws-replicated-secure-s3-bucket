@@ -185,6 +185,14 @@ output "cors_rules_b" {
   description = "The value of the `cors_rules_b` input variable, or the default value if the input was `null`."
   value       = local.var_cors_rules_b
 }
+output "enable_shield_drt_access_a" {
+  description = "The value of the `enable_shield_drt_access_a` input variable."
+  value       = var.enable_shield_drt_access_a
+}
+output "enable_shield_drt_access_b" {
+  description = "The value of the `enable_shield_drt_access_b` input variable, or the value of the `enable_shield_drt_access_a` input variable if the input was `null`."
+  value       = local.var_enable_shield_drt_access_b
+}
 output "tags_s3_bucket_a" {
   description = "The value of the `tags_s3_bucket_a` input variable."
   value       = var.tags_s3_bucket_a

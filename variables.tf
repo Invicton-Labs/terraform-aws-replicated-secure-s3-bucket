@@ -360,6 +360,23 @@ locals {
   var_cors_rules_b = var.cors_rules_b != null ? var.cors_rules_b : var.cors_rules_a
 }
 
+variable "enable_shield_drt_access_a" {
+  description = "Whether to add a policy to bucket A for Shield Advanced DRT access. If the `aws_shield_drt_access_log_bucket_association` resource is used for this bucket, it will modify the bucket policy. This variable causes the same policy to be added, preventing them from conflicting."
+  type        = bool
+  default     = null
+  nullable    = true
+}
+
+variable "enable_shield_drt_access_b" {
+  description = "Whether to add a policy to bucket B for Shield Advanced DRT access. If the `aws_shield_drt_access_log_bucket_association` resource is used for this bucket, it will modify the bucket policy. This variable causes the same policy to be added, preventing them from conflicting. If not provided, will default to the value of `enable_shield_drt_access_a`."
+  type        = bool
+  default     = null
+  nullable    = true
+}
+locals {
+  var_enable_shield_drt_access_b = var.enable_shield_drt_access_b != null ? var.enable_shield_drt_access_b : var.enable_shield_drt_access_a
+}
+
 variable "tags_s3_bucket_a" {
   description = "A map of tags to apply to S3 bucket A."
   type        = map(string)

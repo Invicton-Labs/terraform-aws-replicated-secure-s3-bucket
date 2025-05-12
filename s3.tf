@@ -1,6 +1,6 @@
 module "bucket_a" {
   source  = "Invicton-Labs/secure-s3-bucket/aws"
-  version = "~>0.3.1"
+  version = "~>0.3.2"
   providers = {
     aws = aws.a
   }
@@ -29,6 +29,7 @@ module "bucket_a" {
   force_destroy                 = var.force_destroy_a
   force_allow_cloudtrail_digest = var.force_allow_cloudtrail_digest_a
   cors_rules                    = var.cors_rules_a
+  enable_shield_drt_access      = var.enable_shield_drt_access_a
   tags_s3_bucket                = var.tags_s3_bucket_a
 }
 
@@ -52,7 +53,7 @@ locals {
 
 module "bucket_b" {
   source  = "Invicton-Labs/secure-s3-bucket/aws"
-  version = "~>0.3.1"
+  version = "~>0.3.2"
   providers = {
     aws = aws.b
   }
@@ -81,12 +82,13 @@ module "bucket_b" {
   force_destroy                 = local.var_force_destroy_b
   force_allow_cloudtrail_digest = local.var_force_allow_cloudtrail_digest_b
   cors_rules                    = local.var_cors_rules_b
+  enable_shield_drt_access      = local.var_enable_shield_drt_access_b
   tags_s3_bucket                = var.tags_s3_bucket_b
 }
 
 module "replication" {
   source  = "Invicton-Labs/secure-s3-bucket-replication/aws"
-  version = "~>0.2.1"
+  version = "~>0.2.2"
   providers = {
     aws.a = aws.a
     aws.b = aws.b
